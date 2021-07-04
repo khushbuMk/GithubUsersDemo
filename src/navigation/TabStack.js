@@ -4,10 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Users from '../screen/Users';
 import BookmarkedUser from '../screen/BookmarkedUser';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 
 const Tab = createBottomTabNavigator()
 
-function TabStackNavigator() {
+export const  TabStackNavigator = ()  => {
 
     return (
         <NavigationContainer>
@@ -25,7 +26,7 @@ function TabStackNavigator() {
                         }
             
                         // You can return any component that you like here!
-                        return <View style={{height:32, width:32, backgroundColor:'red'}} ></View>;
+                        return <Image style={[styles.tabIcon, {tintColor:color}]} source={route.name === 'Users' ? require('../assets/images/userSet.png') : require('../assets/images/bookSet.png')} />
                     },
                 })}
                 tabBarOptions={{
@@ -41,11 +42,11 @@ function TabStackNavigator() {
 }
 
 const styles = StyleSheet.create({
-    // tabIcon: {
-    //     height: hp(2.3),
-    //     width: hp(2.3),
-    //     marginBottom: hp(0.6)
-    // }
+    tabIcon: {
+        height: hp(4),
+        width: hp(4),
+        // marginBottom: hp(0.6)
+    }
 })
 
 export default TabStackNavigator

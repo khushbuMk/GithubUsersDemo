@@ -1,16 +1,16 @@
-import * as types from '../../constants/ActionTypes'
-import ApiConstants from '../../api/ApiConstants'
+import * as types from './ActionTypes'
 import { put, takeLatest, call } from 'redux-saga/effects'
-import API from '../../api'
-import * as UserActions from './Users.Action'
-
+import API from '../redux'
 
 
 function* requestGetUser(action) {
     const { onSuccess, onError } = action
     try {
-        const response = yield call(API.get, ApiConstants.GET_GROUP(userId))        
-        yield put(UserActions.setUserResponse(response))
+    //     const user = yield call(Api.fetchUser, action.payload.userId);
+    //    yield put({type: "USER_FETCH_SUCCEEDED", user: user});
+        const api = 'https://docs.github.com/en/rest/reference/users#list-users'
+        const response = yield call(API.get, api)        
+        // yield put(UserActions.setUserResponse(response))
         onSuccess(response)
     } catch (error) {
         onError(error)
