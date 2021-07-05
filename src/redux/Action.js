@@ -11,6 +11,11 @@ export const setUserResponse = (data) => ({
     data
 })
 
+export const setBookmarkedUsersFromStore = (data) => ({
+    type: types.SET_BOOKMARKED_USERS,
+    data
+})
+
 export const setBookmarkUserResponse = (data) => ({
     type: types.BOOKMARK_USERS,
     data

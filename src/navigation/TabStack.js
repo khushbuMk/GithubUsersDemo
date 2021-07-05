@@ -5,10 +5,25 @@ import { NavigationContainer } from '@react-navigation/native';
 import Users from '../screen/Users';
 import BookmarkedUser from '../screen/BookmarkedUser';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import { getBookmarkedUsers } from '../storage/storage';
+import { useDispatch } from 'react-redux';
+import * as UserActions from '../redux/Action'
 
 const Tab = createBottomTabNavigator()
 
 export const  TabStackNavigator = ()  => {
+
+    const dispatch = useDispatch();
+
+    React.useEffect(()=>{
+        async function getBookUsers() {
+            const response = await getBookmarkedUsers();
+            if(response) {
+                dispatch(UserActions.setBookmarkedUsersFromStore(response))
+            }
+        }        
+        getBookUsers()
+    },[])
 
     return (
         <NavigationContainer>

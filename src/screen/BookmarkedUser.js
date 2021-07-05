@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as UserActions from '../redux/Action'
@@ -6,6 +6,7 @@ import { getBookMarkUserListInfo } from '../redux/Selector';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { ItemCard } from './../component/itemCard';
 import { SearchComponent } from './../component/searchComponent';
+import { storeBookmarkedUsers } from '../storage/storage';
 
 function BookmarkedUser() {
 
@@ -13,10 +14,10 @@ function BookmarkedUser() {
         bookMarkedUser: getBookMarkUserListInfo(state)
     }))
 
-    const [searchData, setSearchData] = React.useState()
+    const [searchData, setSearchData] = useState()
     const [isSearching, setIsSearching] = useState(false)
 
-    React.useEffect(()=>{
+    useEffect(()=>{
         setSearchData(bookMarkedUser)
     },[bookMarkedUser])
 
@@ -26,7 +27,7 @@ function BookmarkedUser() {
         dispatch(UserActions.setBookmarkUserResponse(data))
     }
 
-    const renderItem = ({item}) =>{
+    const renderItem = ({item}) => {
 
         let selected;
         bookMarkedUser.map((bitem)=>{
