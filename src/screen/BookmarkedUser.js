@@ -1,8 +1,7 @@
-import * as React from 'react'
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as UserActions from '../redux/Action'
-import { searchBar } from '../component/searchComponent';
 import { getBookMarkUserListInfo } from '../redux/Selector';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { ItemCard } from './../component/itemCard';
@@ -15,12 +14,11 @@ function BookmarkedUser() {
     }))
 
     const [searchData, setSearchData] = React.useState()
+    const [isSearching, setIsSearching] = useState(false)
 
     React.useEffect(()=>{
         setSearchData(bookMarkedUser)
     },[bookMarkedUser])
-
-    console.log("book",bookMarkedUser)
 
     const dispatch = useDispatch()
 
@@ -30,14 +28,18 @@ function BookmarkedUser() {
 
     const renderItem = ({item}) =>{
 
-        // const selected = Object.keys(mapKeys(bookMarkedUser, 'id' )).includes(item.id)
-        // console.log("selected",selected)
+        let selected;
+        bookMarkedUser.map((bitem)=>{
+            if(bitem.id===item.id) {
+                selected = true
+            }
+        })
 
         const imageComponent = () => {
             return (
                 <TouchableOpacity style={{width: 30, height: 30}} onPress={()=> onSelectItem(item)}>
                     <Image style={{width: 30, height: 30}}
-                        source={require('../assets/images/bookmarkSet.png')} />
+                        source={ selected ? require('../assets/images/bookmarkSet.png') : require('../assets/images/bookmarkUnset.png') } />
                 </TouchableOpacity>
             )
         }
@@ -55,7 +57,7 @@ function BookmarkedUser() {
 
             <Text style={styles.text}>BookMarked Screen</Text>
 
-            <SearchComponent searchData={searchData} setSearchData={setSearchData} />
+            <SearchComponent setSearchData={setSearchData} list={bookMarkedUser} setIsSearching={setIsSearching} />
 
             <FlatList
                 style={{paddingHorizontal:wp(5)}}

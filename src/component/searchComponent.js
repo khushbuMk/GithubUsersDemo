@@ -6,17 +6,14 @@ import { getGitHubUserListInfo } from '../redux/Selector';
 
 export const SearchComponent = (props) => {
     
-    const { setSearchData, searchData } = props
-
-    const { gitHubUsers } = useSelector(state => ({
-        gitHubUsers: getGitHubUserListInfo(state)
-    }))
+    const { setSearchData, list, setIsSearching } = props
 
     const [search, setSearch] = useState()
 
     const searchFilter = (text) => {
         setSearch(text)
-        setSearchData(gitHubUsers.filter((item)=>item.login.toLowerCase().includes(text.toLowerCase())))
+        setSearchData(list.filter((item)=>item.login.toLowerCase().includes(text.toLowerCase())))
+        text ? setIsSearching(true) : setIsSearching(false)
     }
 
     return (

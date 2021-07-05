@@ -18,18 +18,18 @@ export const listReducer = createReducer(state = initialState, {
     },
     [types.BOOKMARK_USERS](state, action) {
         const { data } = action
-        const oldData = mapKeys(state.bookmarkList, 'id' )
-        const newData = mapKeys([data], 'id' )
+        const oldData = mapKeys(state.bookmarkList, 'id' )        
         let join 
 
-        if( Object.keys(oldData).includes(data.id) ) {
+        if( Object.keys(oldData).includes(String(data.id)) ) {
             join = Object.values(oldData).filter((item)=> item.id !== data.id)
+            console.log("Remove")
         } else {
+            const newData = mapKeys([data], 'id' )
             join = {...newData, ...oldData}
+            console.log("Add")
         }
 
-        console.log("Debugging joing", {...oldData, data})
-    
         return {
             ...state,
             bookmarkList : Object.values(join)
